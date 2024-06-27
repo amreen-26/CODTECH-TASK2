@@ -1,0 +1,47 @@
+#include<dht.h> //To include a library to read data from dht11 sensor
+#include<LiquidCrystal.h> //To include a library to write data on the 16*2 lcd device.
+
+LiquidCrystal lcd(0, 1, 8, 9, 10, 11); //we have connected LCD pins to these pins on Arduino board
+#define dht_dpin 2 //DHT data pin is connected to pin 2 on the Arduino Board
+
+dht DHT;
+
+byte degree[8] =
+{
+0b00011,
+0b00011,
+0b00000,
+0b00000,
+0b00000,
+0b00000,
+0b00000,
+0b00000
+}; // This line is to create a custom Degree sign in degree celcius.
+
+void setup() // this will run only on either on start-up or when arduino is reset
+{
+lcd.begin(16, 2);
+lcd.createChar(1, degree); //we assign a number 1 to the degree sign created above
+lcd.clear();
+lcd.print("Temp & Humidity");
+lcd.setCursor(0,1);
+lcd.print(" Measurement "); // Print the words Humidity Measurement on LCD screen
+delay(2000); // Keep the words on screen for two seconds
+lcd.clear(); // clear the screen for writing anything else
+delay(1500);
+}
+
+void loop() // this function will keep on running
+{
+DHT.read22(dht_dpin); // This command will read the incoming data from the DHT22 sensor
+lcd.setCursor(0,0); // Setting Curser on First character of first line
+lcd.print("Humidity: "); // printing the word Humidity: on the display
+lcd.print(DHT.humidity); // printing Humidity value we got from the Sensor on the LCD
+lcd.print("%");
+lcd.setCursor(0,1); // setting curser on First character on 2nd line
+lcd.print("Temp: ");
+lcd.print(DHT.temperature); // Printing temperature reading we got from Sensor on the LCD
+lcd.write(1); // Write the custom charecter we created (degree sign)
+lcd.print("C");
+delay(500); // refresh every half second
+}
