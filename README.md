@@ -22,4 +22,4 @@ Technologies Used
 - Hardware Setup: Requires arduino uno board, DHT22 sensor, resistor(optional), potentiometer, breadboard, jumper wires. 
 - Simulator: If no hardware, then same can be implemented using wokwi simulator ye using above components.
 - Embedded C
-- 
+  
